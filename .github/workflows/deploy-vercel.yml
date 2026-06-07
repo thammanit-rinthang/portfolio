@@ -42,6 +42,37 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
+      - name: Verify pulled Vercel environment
+        shell: bash
+        run: |
+          env_file=".vercel/.env.production.local"
+          if [ ! -f "$env_file" ]; then
+            echo "Missing $env_file. Check VERCEL_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID."
+            exit 1
+          fi
+
+          required_vars=(
+            "DATABASE_URL"
+            "NEXT_PUBLIC_SUPABASE_URL"
+            "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+            "SUPABASE_SERVICE_ROLE_KEY"
+          )
+
+          missing_vars=()
+          for var_name in "${required_vars[@]}"; do
+            if ! grep -q "^${var_name}=" "$env_file"; then
+              missing_vars+=("$var_name")
+            fi
+          done
+
+          if [ "${#missing_vars[@]}" -gt 0 ]; then
+            echo "Missing required Vercel Production env vars: ${missing_vars[*]}"
+            echo "Add them in Vercel Project Settings > Environment Variables with Production selected."
+            exit 1
+          fi
+
+          echo "Required Vercel Production env vars were pulled."
+
       - name: Build deployment artifact
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
