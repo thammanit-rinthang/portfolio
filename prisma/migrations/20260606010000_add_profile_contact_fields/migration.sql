@@ -1,0 +1,3 @@
+ALTER TABLE "profiles"
+ADD COLUMN IF NOT EXISTS "phone" TEXT,
+ADD COLUMN IF NOT EXISTS "jobdb_url" TEXT;

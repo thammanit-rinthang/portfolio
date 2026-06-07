@@ -1,0 +1,4 @@
+ALTER TABLE "profiles"
+ADD COLUMN IF NOT EXISTS "avatar_url" TEXT,
+ADD COLUMN IF NOT EXISTS "avatar_path" TEXT,
+ADD COLUMN IF NOT EXISTS "avatar_alt" TEXT;

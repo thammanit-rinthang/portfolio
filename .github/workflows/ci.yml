@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      NEXT_PUBLIC_APP_NAME: AI Resume Portfolio
+      NEXT_PUBLIC_SITE_URL: http://127.0.0.1:3000
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres?sslmode=disable
+      DIRECT_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres?sslmode=disable
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: test-anon-key
+      SUPABASE_SERVICE_ROLE_KEY: test-service-role-key
+      SUPABASE_RESUME_BUCKET: resume-assets
+      SUPABASE_PROJECT_IMAGES_BUCKET: project-images
+      SUPABASE_OG_IMAGES_BUCKET: og-images
+      SUPABASE_PRIVATE_UPLOADS_BUCKET: private-uploads
+      ADMIN_EMAILS: admin@example.com
+      CHAT_DEFAULT_LOCALE: en
+      CHAT_MAX_MESSAGE_LENGTH: 1500
+      CHAT_REQUEST_TIMEOUT_MS: 20000
+      CHAT_PROVIDER_TIMEOUT_MS: 10000
+      CHAT_RATE_LIMIT_WINDOW_MS: 600000
+      CHAT_RATE_LIMIT_MAX: 20
+      AI_PROVIDER_PRIORITY: groq,openrouter,ollama
+      OLLAMA_ENABLED: false
+      OLLAMA_BASE_URL: http://127.0.0.1:11434
+      OLLAMA_MODEL: llama3.1
+      GROQ_ENABLED: false
+      GROQ_API_KEY: test-groq-key
+      GROQ_MODEL: llama-3.1-8b-instant
+      OPENROUTER_ENABLED: false
+      OPENROUTER_API_KEY: test-openrouter-key
+      OPENROUTER_MODEL: openai/gpt-4o-mini
+      OPENROUTER_SITE_URL: http://127.0.0.1:3000
+      OPENROUTER_APP_NAME: AI Resume Portfolio
+      LOG_LEVEL: error
+      ENABLE_CONTEXT_DEBUG_LOGS: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Cache Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-${{ hashFiles('app/**/*.ts', 'app/**/*.tsx', 'next.config.ts', 'prisma/**/*.prisma') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('package-lock.json') }}-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prisma generate
+        run: npm run prisma:generate
+
+      - name: Prisma validate
+        run: npm run prisma:validate
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm run test:run
+
+      - name: Build
+        run: npm run build
