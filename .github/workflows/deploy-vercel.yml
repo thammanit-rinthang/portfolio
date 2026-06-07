@@ -60,7 +60,7 @@ jobs:
 
           missing_vars=()
           for var_name in "${required_vars[@]}"; do
-            if ! grep -q "^${var_name}=" "$env_file"; then
+            if ! grep -Eq "^${var_name}=.+" "$env_file"; then
               missing_vars+=("$var_name")
             fi
           done
@@ -72,6 +72,7 @@ jobs:
           fi
 
           echo "Required Vercel Production env vars were pulled."
+          cp "$env_file" ".env.production.local"
 
       - name: Build deployment artifact
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
