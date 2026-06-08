@@ -47,16 +47,16 @@ export function HomeContent({ profile, skills, experiences, featuredProjects }: 
     <main className="stack-landing">
       <section className="stack-screen stack-screen-hero">
         <div className="stack-surface hero-shell">
-          <div className="mx-auto grid h-full w-full max-w-6xl gap-12 px-5 py-12 md:grid-cols-[1.15fr_0.85fr] md:items-center md:py-16">
-            <div className="animate-fade-up animate-duration-300 animate-ease-out animate-fill-both">
+          <div className="hero-content mx-auto grid h-full w-full max-w-6xl gap-12 px-5 py-12 md:grid-cols-[1.15fr_0.85fr] md:items-center md:py-16">
+            <div className="hero-copy animate-fade-up animate-duration-300 animate-ease-out animate-fill-both">
               <p className="eyebrow">{t(ui.hero.eyebrow, locale)}</p>
-              <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[1.02] text-[color:var(--ink)] sm:text-6xl">
+              <h1 className="hero-title mt-5 max-w-4xl font-semibold leading-[1.02] text-[color:var(--ink)]">
                 {profile.name}
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-[color:var(--muted)]">
+              <p className="hero-summary mt-6 max-w-2xl text-lg leading-8 text-[color:var(--muted)]">
                 {profile.summary}
               </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <div className="hero-actions mt-9 flex flex-col gap-3 sm:flex-row">
                 <Link className="btn-primary" href="/projects">
                   {t(ui.hero.ctaProjects, locale)}
                 </Link>

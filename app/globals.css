@@ -30,6 +30,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), sans-serif;
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -43,6 +44,15 @@ body {
     linear-gradient(rgba(24, 32, 28, 0.08) 1px, transparent 1px),
     var(--background);
   background-size: 48px 48px;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  overflow-wrap: anywhere;
+}
+
+.hero-summary {
+  text-wrap: pretty;
 }
 
 .section-band {
@@ -108,6 +118,7 @@ body {
 
 .nav-link {
   padding: 0.5rem 0.75rem;
+  white-space: nowrap;
   transition:
     color var(--motion-fast) var(--ease-standard),
     background-color var(--motion-fast) var(--ease-standard);
@@ -483,16 +494,121 @@ body {
 }
 
 @media (max-width: 640px) {
+  body {
+    padding-bottom: 3.75rem;
+  }
+
   .section-band {
     padding: 56px 0;
   }
 
+  .site-header-inner {
+    gap: 0.5rem;
+    padding-inline: 1rem;
+  }
+
+  .site-brand {
+    flex: 0 0 auto;
+  }
+
+  .site-avatar {
+    height: 2.25rem;
+    width: 2.25rem;
+  }
+
+  .site-nav {
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-bottom: 0.15rem;
+    scrollbar-width: none;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
   .nav-link {
-    padding: 0.5rem 0.45rem;
+    padding: 0.5rem 0.55rem;
+  }
+
+  .locale-toggle {
+    margin-left: 0.25rem;
+    padding-inline: 0.45rem;
+  }
+
+  .hero-shell {
+    background-size: 36px 36px;
+  }
+
+  .hero-content {
+    gap: 1.5rem;
+    padding: 2rem 1.25rem 2.5rem;
+  }
+
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-title {
+    font-size: clamp(2.35rem, 10.5vw, 3rem);
+    line-height: 1.04;
+    margin-top: 1rem;
+  }
+
+  .hero-summary {
+    font-size: 1rem;
+    line-height: 1.62;
+    margin-top: 1.25rem;
+    max-width: 34rem;
+    order: 3;
+    padding-right: 3.25rem;
+  }
+
+  .hero-actions {
+    margin-top: 1.35rem;
+    order: 2;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    min-height: 2.85rem;
+    width: 100%;
+  }
+
+  .eyebrow {
+    font-size: 0.68rem;
   }
 
   .visual-panel {
     min-height: auto;
+    padding: 0.85rem;
+  }
+
+  .visual-panel-header {
+    gap: 1rem;
+    overflow-wrap: anywhere;
+  }
+
+  .visual-grid {
+    gap: 0.5rem;
+  }
+
+  .visual-grid span {
+    min-height: 4.4rem;
+    padding: 0.7rem;
+  }
+
+  .signal-list div {
+    align-items: flex-start;
+    padding: 0.75rem;
+  }
+
+  .signal-list span {
+    flex: 0 0 auto;
+    margin-top: 0.35rem;
   }
 
   .stack-surface {
@@ -500,6 +616,53 @@ body {
     min-height: auto;
   }
 
+  .project-card,
+  .compact-panel,
+  .contact-panel,
+  .resume-block,
+  .case-study-grid section {
+    padding: 1rem;
+  }
+
+  .project-card-media {
+    margin: -1rem -1rem 1rem;
+  }
+
+  #chat-launcher-btn {
+    bottom: max(0.85rem, env(safe-area-inset-bottom));
+    height: 2.75rem;
+    right: max(0.85rem, env(safe-area-inset-right));
+    width: 2.75rem;
+  }
+
+  .chat-popover {
+    bottom: calc(max(0.85rem, env(safe-area-inset-bottom)) + 3.35rem);
+    right: max(0.85rem, env(safe-area-inset-right));
+  }
+}
+
+@media (max-width: 380px) {
+  .site-header-inner {
+    padding-inline: 0.75rem;
+  }
+
+  .nav-link {
+    font-size: 0.78rem;
+    padding-inline: 0.45rem;
+  }
+
+  .hero-content {
+    padding-inline: 1rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.1rem, 10.5vw, 2.45rem);
+  }
+
+  .hero-summary {
+    font-size: 0.96rem;
+    padding-right: 2.9rem;
+  }
 }
 
 @media (min-width: 640px) {
@@ -613,9 +776,9 @@ div[role="dialog"] .overflow-y-auto::-webkit-scrollbar-thumb {
 @media (max-width: 640px) {
   div[role="dialog"] {
     max-width: 100% !important;
-    height: 85vh !important;
+    height: min(84svh, 720px) !important;
     top: auto !important;
-    bottom: 0 !important;
+    bottom: env(safe-area-inset-bottom) !important;
     border-radius: 12px 12px 0 0;
     border-top: 1px solid var(--line-strong);
     border-left: none;

@@ -30,8 +30,8 @@ export function SiteHeader({ profile: dynamicProfile }: SiteHeaderProps) {
 
   return (
     <header className="sticky top-0 z-20 border-b border-[color:var(--line)] bg-[color:var(--surface)]/90 backdrop-blur">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5">
-        <Link href="/" className="flex items-center gap-3" aria-label="Home">
+      <div className="site-header-inner mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-5">
+        <Link href="/" className="site-brand flex min-w-0 items-center gap-3" aria-label="Home">
           {avatarUrl ? (
             <span className="site-avatar">
               <Image
@@ -53,7 +53,7 @@ export function SiteHeader({ profile: dynamicProfile }: SiteHeaderProps) {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-1 text-sm text-[color:var(--muted)]">
+        <nav className="site-nav flex min-w-0 items-center gap-1 text-sm text-[color:var(--muted)]">
           {navItems.map((item) => (
             <Link key={item.href} className="nav-link" href={item.href}>
               {item.label}
@@ -65,7 +65,7 @@ export function SiteHeader({ profile: dynamicProfile }: SiteHeaderProps) {
             id="locale-toggle"
             onClick={toggle}
             aria-label={t(ui.nav.toggleAriaLabel, locale)}
-            className="ml-2 font-mono text-[11px] font-semibold tracking-widest px-2 py-1 rounded border border-[color:var(--line)] text-[color:var(--muted)] hover:border-[color:var(--line-strong)] hover:text-[color:var(--ink)] transition-colors"
+            className="locale-toggle ml-2 font-mono text-[11px] font-semibold tracking-widest px-2 py-1 rounded border border-[color:var(--line)] text-[color:var(--muted)] hover:border-[color:var(--line-strong)] hover:text-[color:var(--ink)] transition-colors"
           >
             {t(ui.nav.toggleLang, locale)}
           </button>

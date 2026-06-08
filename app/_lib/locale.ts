@@ -130,6 +130,13 @@ export const ui = {
     sourceLabel:     { en: "Source: Verified Content", th: "แหล่งข้อมูล: ยืนยันแล้ว" },
     closeChat:       { en: "Close chat", th: "ปิดแชต" },
     openChat:        { en: "Open portfolio chat", th: "เปิดแชต portfolio" },
+    popoverTitle:    { en: "You can ask about this profile", th: "สามารถแชทถามข้อมูลได้" },
+    popoverDescription: {
+      en: "Use Portfolio Chat to ask about projects, skills, experience, and deployment details.",
+      th: "ถามเรื่องโปรเจกต์ ทักษะ ประสบการณ์ และการ deploy จากข้อมูล portfolio ได้",
+    },
+    popoverAction:   { en: "Ask now", th: "ถามได้เลย" },
+    popoverDismiss:  { en: "Dismiss chat tip", th: "ปิดคำแนะนำแชท" },
     you:             { en: "You", th: "คุณ" },
     assistant:       { en: "Portfolio Assistant", th: "ผู้ช่วย Portfolio" },
     suggestedLabel:  { en: "Suggested Questions:", th: "คำถามแนะนำ:" },
